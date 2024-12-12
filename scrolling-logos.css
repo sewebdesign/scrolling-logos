@@ -139,6 +139,7 @@
   margin-top: 0!important;
   z-index: 1;
   display: block!important;
+	max-width: 100%!important; 
 }
 /* Logo Images Without Link Not Clickable */
 #siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item-content__button[href=""] {
