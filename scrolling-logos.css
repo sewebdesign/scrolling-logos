@@ -83,6 +83,7 @@
 	width: fit-content !important;
 	min-width: fit-content !important;
 	transform: translateZ(0) !important;
+  position: relative;
 }
 
 #siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item-media {
@@ -128,6 +129,20 @@
 	#siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item img {
 		height: var(--mobilelogoheight, 44px) !important;
 	}
+}
+
+/* Make Logo Images Clickable */
+#siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item-content, #siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item-content__button-wrapper, #siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item-content__button-container, #siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item-content__button {
+  position: absolute;
+  inset: 0;
+  opacity: 0!important;
+  margin-top: 0!important;
+  z-index: 1;
+  display: block!important;
+}
+/* Logo Images Without Link Not Clickable */
+#siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item-content__button[href=""] {
+  pointer-events: none!important;
 }
 
 /* Gradient */
