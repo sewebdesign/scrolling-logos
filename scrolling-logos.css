@@ -5,7 +5,7 @@
 	--mobilelogoheight: 44px;
 	--mobilelogospacing: 30px;
 	--mobiletitlespacing: 30px;
-	--mobscrollspeed: 1.5;
+	--mobscrollslow: 1.5;
 }
 
 #siteWrapper .user-items-list[data-space-below-section-title-value="91"] {
@@ -62,7 +62,7 @@
 /* Mobile speed adjustment */
 @media screen and (max-width: 767px) {
 	#siteWrapper .user-items-list[data-space-below-section-title-value="91"] .user-items-list-simple {
-		--animation-duration: calc((var(--scroller-set-width, 2000) / var(--scrollspeed) * var(--mobscrollspeed)) * 1s);
+		--animation-duration: calc((var(--scroller-set-width, 2000) / var(--scrollspeed) * var(--mobscrollslow)) * 1s);
 	}
 }
 
