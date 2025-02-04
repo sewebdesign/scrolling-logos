@@ -154,11 +154,11 @@
 }
 
 /* Inset Gradient */
-.content-wrapper:has([data-layout-width="inset"] .list-item[data-is-card-enabled="true"]) {
+.content-wrapper:has([data-space-below-section-title-value="91"][data-layout-width="inset"] .list-item[data-is-card-enabled="true"]) {
 	padding-inline: var(--sqs-site-gutter);
 	box-sizing: border-box;
 }
-.content-wrapper:has([data-layout-width="inset"] .list-item[data-is-card-enabled="true"]) .content {
+.content-wrapper:has([data-space-below-section-title-value="91"][data-layout-width="inset"] .list-item[data-is-card-enabled="true"]) .content {
 	max-width: var(--sqs-site-max-width);
 	margin-inline: auto;
 }
