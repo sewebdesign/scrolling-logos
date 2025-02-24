@@ -41,6 +41,14 @@ document.addEventListener("DOMContentLoaded", function () {
          (child) => !child.hasAttribute("aria-hidden")
        );
 
+       // Check if there are any original items - if not, do nothing
+       if (originalItems.length === 0) {
+         // Reset animation-related attributes to prevent issues
+         scroller.removeAttribute("data-scroller-scrolling");
+         scrollerStates.delete(scroller);
+         return;
+       }
+
        // Calculate total width needed for one complete set
        const setWidth = originalItems.reduce((sum, item) => {
          const style = getComputedStyle(item);
@@ -52,8 +60,8 @@ document.addEventListener("DOMContentLoaded", function () {
        scroller.style.setProperty("--scroller-set-width", setWidth);
 
        // Calculate sets needed based on container width
-       const scrollerWidth = scroller.parentElement.offsetWidth;
-       const totalSets = Math.ceil(scrollerWidth / setWidth);
+       const scrollerWidth = scroller.parentElement ? scroller.parentElement.offsetWidth : 0;
+       const totalSets = Math.max(1, Math.ceil(scrollerWidth / setWidth));
        const prevTotalSets = scrollerStates.get(scroller);
 
        // Skip DOM updates if number of sets hasn't changed
