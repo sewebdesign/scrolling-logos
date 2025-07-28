@@ -15,7 +15,8 @@
 
 #siteWrapper .user-items-list[data-space-below-section-title-value="91"] .user-items-list-simple {
 	display: flex;
-	flex-wrap: nowrap;
+	flex-direction: row!important;
+	flex-wrap: nowrap!important;
 	align-items: center;
 	width: fit-content !important;
 	margin: 0 !important;
