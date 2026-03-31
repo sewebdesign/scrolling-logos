@@ -99,7 +99,7 @@
 	opacity: 1 !important;
 	clip-path: none !important;
 	animation: none !important;
-	transform: none !important;
+	transform: translate(0, 0) scale(1) !important;
 	transition: none !important;
 	transition-timing-function: unset !important;
 	transition-duration: unset !important;
