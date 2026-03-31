@@ -26,6 +26,7 @@
 	opacity: 0;
 	animation: logos-scrolling var(--animation-duration) linear infinite;
 	will-change: transform;
+	contain: layout style;
 	--animation-duration: calc((var(--scroller-set-width, 2000) / var(--scrollspeed)) * 1s);
 	--animation-distance: calc(var(--scroller-set-width, 2000) * -1px);
 }
@@ -83,14 +84,12 @@
 	padding: 0 !important;
 	width: fit-content !important;
 	min-width: fit-content !important;
-	transform: translateZ(0) !important;
   position: relative;
 }
 
 #siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item-media {
 	margin: 0 !important;
 	width: fit-content !important;
-	transform: translateZ(0) !important;
 }
 
 #siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item-media-inner {
@@ -98,19 +97,14 @@
 	height: unset !important;
 	width: fit-content;
 	opacity: 1 !important;
-	transform: translateZ(0) !important;
 	clip-path: none !important;
 	animation: none !important;
 	transition: none !important;
 	transition-timing-function: unset !important;
 	transition-duration: unset !important;
-  background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
 }
 
 #siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item img {
-	transform: translateZ(0) !important;
 	position: relative !important;
 	width: auto !important;
 	height: var(--desklogoheight, 80px) !important;
