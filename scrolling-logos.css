@@ -84,7 +84,7 @@
 	padding: 0 !important;
 	width: fit-content !important;
 	min-width: fit-content !important;
-  position: relative;
+    position: relative;
 }
 
 #siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item-media {
@@ -99,6 +99,7 @@
 	opacity: 1 !important;
 	clip-path: none !important;
 	animation: none !important;
+	transform: none !important;
 	transition: none !important;
 	transition-timing-function: unset !important;
 	transition-duration: unset !important;
@@ -134,7 +135,7 @@
   margin-top: 0!important;
   z-index: 1;
   display: block!important;
-	max-width: 100%!important; 
+  max-width: 100%!important; 
 }
 /* Logo Images Without Link Not Clickable */
 #siteWrapper .user-items-list[data-space-below-section-title-value="91"] .list-item-content__button[href=""] {
