@@ -1,25 +1,37 @@
 document.addEventListener("DOMContentLoaded", function () {
-   // Keep track of scroller states
+   // Keep track of scroller states and cache width calculations
    const scrollerStates = new Map();
+   const widthCache = new WeakMap();
 
-   // Force all images to load eagerly, bypassing Squarespace lazy-loading
-   function forceEagerImages(scroller) {
-     const images = scroller.querySelectorAll("img");
-     const promises = [];
-     images.forEach((img) => {
-       const url = img.dataset.src || img.dataset.image;
-       if (url) {
-         img.src = url;
+   // Get cached metrics for an item or calculate and cache them if not exists
+   function getItemMetrics(item) {
+     if (!widthCache.has(item)) {
+       const rect = item.getBoundingClientRect();
+       const style = getComputedStyle(item);
+       const metrics = {
+         width: rect.width,
+         marginLeft: parseFloat(style.marginLeft),
+         marginRight: parseFloat(style.marginRight)
+       };
+       widthCache.set(item, metrics);
+       return metrics;
+     }
+     return widthCache.get(item);
+   }
+
+   // Convert images to background images on parent elements for better performance
+   function setInitialBackgrounds(scroller) {
+     const items = scroller.querySelectorAll("img");
+     items.forEach((image) => {
+       if (image) {
+         const parent = image.parentElement;
+         const activeSrc = image.currentSrc || image.src;
+         if (activeSrc && parent) {
+           parent.style.backgroundImage = `url('${activeSrc}')`;
+           image.style.visibility = "hidden";
+         }
        }
-       img.loading = "eager";
-       img.removeAttribute("data-loader");
-       if (img.complete) return;
-       promises.push(new Promise((resolve) => {
-         img.addEventListener("load", resolve, { once: true });
-         img.addEventListener("error", resolve, { once: true });
-       }));
      });
-     return Promise.all(promises);
    }
 
    function applyScrollProperties(scroller) {
@@ -41,14 +53,14 @@ document.addEventListener("DOMContentLoaded", function () {
        const setWidth = originalItems.reduce((sum, item) => {
          const style = getComputedStyle(item);
          const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
-         return sum + item.getBoundingClientRect().width + margin;
+         return sum + item.offsetWidth + margin;
        }, 0);
 
        // Store set width as CSS variable for animation calculations
        scroller.style.setProperty("--scroller-set-width", setWidth);
 
        // Calculate sets needed based on container width
-       const scrollerWidth = scroller.parentElement ? scroller.parentElement.getBoundingClientRect().width : 0;
+       const scrollerWidth = scroller.parentElement ? scroller.parentElement.offsetWidth : 0;
        const totalSets = Math.max(1, Math.ceil(scrollerWidth / setWidth));
        const prevTotalSets = scrollerStates.get(scroller);
 
@@ -87,16 +99,16 @@ document.addEventListener("DOMContentLoaded", function () {
    }
 
    // Initialize all scrollers found on the page
-   async function initializeScrollers() {
+   function initializeScrollers() {
      const scrollers = document.querySelectorAll('.user-items-list[data-space-below-section-title-value="91"] .user-items-list-simple');
-
+     
      // If no scrollers found, don't set up resize listener
      if (!scrollers.length) {
        return null;
      }
-
-     await Promise.all(Array.from(scrollers).map(scroller => forceEagerImages(scroller)));
+     
      scrollers.forEach(scroller => {
+       setInitialBackgrounds(scroller);
        applyScrollProperties(scroller);
      });
      return scrollers;
@@ -111,16 +123,16 @@ document.addEventListener("DOMContentLoaded", function () {
      };
    }
 
-   initializeScrollers().then(scrollers => {
-     // Only add resize listener if scrollers exist
-     if (scrollers) {
-       const handleResize = debounce(() => {
-         scrollers.forEach((scroller) => {
-           applyScrollProperties(scroller);
-         });
-       }, 300);
+   const scrollers = initializeScrollers();
 
-       window.addEventListener("resize", handleResize);
-     }
-   });
+   // Only add resize listener if scrollers exist
+   if (scrollers) {
+     const handleResize = debounce(() => {
+       scrollers.forEach((scroller) => {
+         applyScrollProperties(scroller);
+       });
+     }, 300);
+     
+     window.addEventListener("resize", handleResize);
+   }
 });
